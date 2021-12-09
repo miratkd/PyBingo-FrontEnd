@@ -4,10 +4,9 @@
       Py-Bingo
     </div>
     <div class="footer__info">
-      <div>test</div>
-      <div>test</div>
-      <div>test</div>
-      <div>test</div>
+      <div>Made by: Lucas Mira</div>
+      <a href="https://www.linkedin.com/in/lucas-mira-17514b203/" target="_blank">Linkedin</a>
+      <a href="https://github.com/miratkd" target="_blank">Github</a>
     </div>
   </div>
 </template>
@@ -19,14 +18,18 @@ export default {
 </script>
 
 <style scoped>
+a{
+  color: white;
+  text-decoration: none;
+}
 .footer__info{
-  border: 1px solid white;
   border-radius: 5px;
   width: 35%;
   margin-right: 3%;
   padding: 2px 5px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  color: white;
 }
 .footer__logo{
   font-size: xxx-large;
