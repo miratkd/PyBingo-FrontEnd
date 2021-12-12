@@ -4,12 +4,12 @@
       Bem vindo ao Py-Bingo!
     </div>
     <div class="buttons">
-      <div class="button" style="background: lightblue">
+      <router-link to="/card" class="button" style="background: lightblue">
         Entre em uma partida.
-      </div>
-      <div class="button" style="background: lightgreen">
+      </router-link>
+      <router-link to="/admin" class="button" style="background: lightgreen">
         Crie uma partida de bingo.
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -22,11 +22,13 @@ export default {
 
 <style scoped>
 .button{
+  text-decoration: none;
   padding: 30px 0;
   width: 25vw;
   text-align: center;
   border-radius: 5px;
   cursor: pointer;
+  color: #2c3e50;
 }
 .buttons{
   display: flex;
