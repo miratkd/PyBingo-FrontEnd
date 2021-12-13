@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div v-if="!admin"><CreateAccount :type="'admin'"/></div>
-    <div v-else>logado</div>
+    <div v-if="!admin"><CreateAccount :type="'admin'" :setAccount="setAccount"/></div>
+    <div v-else>
+      <div class="row header">
+        <div>{{admin.name}}</div>
+        <div>Codigo:</div>
+        <div>{{admin.id}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,10 +22,20 @@ export default {
   },
   components: {
     CreateAccount
+  },
+  methods: {
+    setAccount (data) {
+      this.admin = data
+    }
+  },
+  mounted () {
+    console.log(this.$store.state.admin)
   }
 }
 </script>
 
 <style scoped>
-
+.header{
+  justify-content: space-evenly;
+}
 </style>

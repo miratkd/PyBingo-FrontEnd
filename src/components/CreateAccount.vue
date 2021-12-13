@@ -4,6 +4,10 @@
       <div>Nome:</div>
       <input v-model="name" class="input" type="text">
     </div>
+    <div class="row input__containear" style="margin-top: 5vh">
+      <div>Senha:</div>
+      <input v-model="password" class="input" type="password">
+    </div>
     <div v-if="type === 'card'" style="margin-top: 5vh" class="row input__containear">
       <div>Codigo de admin:</div>
       <input v-model="admin" class="input" type="text">
@@ -24,10 +28,11 @@ export default {
   data () {
     return {
       name: undefined,
-      admin: undefined
+      admin: undefined,
+      password: undefined
     }
   },
-  props: ['type'],
+  props: ['type', 'setAccount'],
   methods: {
     createAccount () {
       if (!this.name) {
@@ -35,7 +40,7 @@ export default {
         return
       }
       if (this.type === 'admin') {
-        axios.post('http://127.0.0.1:8000/bingo_admin/', { name: this.name }).then(response => console.log(response))
+        axios.post('http://127.0.0.1:8000/bingo_admin/', { name: this.name, password: this.password }).then(response => this.setAccount(response.data))
       } else {
         axios.post('http://127.0.0.1:8000/card/', { user_name: this.name, admin: this.admin }).then(response => console.log(response))
       }
