@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style>
+div{
+  color: black;
+}
 .row{
   display: flex;
   flex-direction: row;
