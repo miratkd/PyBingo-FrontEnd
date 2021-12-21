@@ -1,4 +1,5 @@
 <template>
+  <Loading :isLoading="isLoading"/>
   <div v-if="admin">
     <div class="row header">
       <div class="name">
@@ -36,22 +37,29 @@
 </template>
 
 <script>
+import Loading from '../components/Loading.vue'
 
 export default {
+  components: { Loading },
   name: 'Admin',
   data () {
     return {
       admin: undefined,
       numbers: [],
       lastNumber: '--',
-      cards: []
+      cards: [],
+      isLoading: false
     }
   },
   methods: {
     cleanNumbers () {
+      this.isLoading = true
       const respost = confirm('Tem certeza que deseja apagar todos os numeros?', 'Sim')
       if (!respost) return
-      this.$store.dispatch('cleanNumbers', this.$route.params.id).then(() => { this.numbers = [] })
+      this.$store.dispatch('cleanNumbers', this.$route.params.id).then(() => {
+        this.numbers = []
+        this.isLoading = false
+      })
     },
     addNumber () {
       this.$store.dispatch('addNumber', this.$route.params.id).then(response => {
@@ -60,16 +68,12 @@ export default {
       })
     }
   },
-  mounted () {
-    this.$store.dispatch('getAdmin', this.$route.params.id).then(response => {
-      this.admin = response
-    })
-    this.$store.dispatch('getAdminNumbers', this.$route.params.id).then(response => {
-      this.numbers = response
-    })
-    this.$store.dispatch('getCards', this.$route.params.id).then(response => {
-      this.cards = response
-    })
+  async mounted () {
+    this.isLoading = true
+    this.admin = await this.$store.dispatch('getAdmin', this.$route.params.id)
+    this.numbers = await this.$store.dispatch('getAdminNumbers', this.$route.params.id)
+    this.cards = await this.$store.dispatch('getCards', this.$route.params.id)
+    this.isLoading = false
   }
 }
 </script>
