@@ -28,7 +28,7 @@
         Jogadores:
       </div>
       <div class="cards row">
-        <div v-for="card in cards" :key="card.id" class="card">
+        <div v-for="card in cards" :key="card.id" class="card" :class="isBingo(card)">
           {{card.user_name}}
         </div>
       </div>
@@ -58,6 +58,7 @@ export default {
       if (!respost) return
       this.$store.dispatch('cleanNumbers', this.$route.params.id).then(() => {
         this.numbers = []
+        this.lastNumber = '--'
         this.isLoading = false
       })
     },
@@ -66,24 +67,40 @@ export default {
         this.numbers.push(response)
         this.lastNumber = response.number
       })
+    },
+    async updateCards () {
+      setTimeout(async () => {
+        this.cards = await this.$store.dispatch('getCards', this.$route.params.id)
+        this.updateCards()
+      }, 5000)
+    },
+    isBingo (card) {
+      if (card.is_bingo) return 'bingo__card'
     }
   },
   async mounted () {
     this.isLoading = true
     this.admin = await this.$store.dispatch('getAdmin', this.$route.params.id)
     this.numbers = await this.$store.dispatch('getAdminNumbers', this.$route.params.id)
-    this.cards = await this.$store.dispatch('getCards', this.$route.params.id)
+    await this.updateCards()
     this.isLoading = false
   }
 }
 </script>
 
 <style scoped>
+.bingo__card{
+  background: gold !important;
+}
 .cards__title{
-
+  margin-bottom: 5px;
 }
 .card{
   margin: 0 10px;
+  background: lightgreen;
+  border-radius: 5px;
+  padding: 2px 5px;
+  cursor: pointer;
 }
 .cards{
   background-color: lightblue;
