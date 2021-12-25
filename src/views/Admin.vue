@@ -28,7 +28,8 @@
         Jogadores:
       </div>
       <div class="cards row">
-        <div v-for="card in cards" :key="card.id" class="card" :class="isBingo(card)">
+        <div v-if="cards.length < 1">Carregando...</div>
+        <div v-else v-for="card in cards" :key="card.id" class="card" :class="isBingo(card)">
           {{card.user_name}}
         </div>
       </div>
@@ -38,6 +39,8 @@
 
 <script>
 import Loading from '../components/Loading.vue'
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 
 export default {
   components: { Loading },
@@ -76,6 +79,17 @@ export default {
     },
     isBingo (card) {
       if (card.is_bingo) return 'bingo__card'
+    },
+    async getNotifications () {
+      setTimeout(async () => {
+        const notification = await this.$store.dispatch('getNotifications', this.$route.params.id)
+        if (notification) {
+          notification.forEach(element => {
+            toast.success(element.card.user_name + ' gritou bingo!')
+          })
+        }
+        this.getNotifications()
+      }, 5000)
     }
   },
   async mounted () {
@@ -83,6 +97,7 @@ export default {
     this.admin = await this.$store.dispatch('getAdmin', this.$route.params.id)
     this.numbers = await this.$store.dispatch('getAdminNumbers', this.$route.params.id)
     await this.updateCards()
+    await this.getNotifications()
     this.isLoading = false
   }
 }
@@ -179,5 +194,36 @@ export default {
 .header{
   justify-content: space-evenly;
   padding-top: 5vh;
+}
+@media screen and (max-width: 500px) {
+  .row {
+    flex-direction: column;
+  }
+  .header{
+    height: 15vh;
+    font-size: 30px;
+    padding-top: 2vh;
+  }
+  .name{
+    width: 80vw;
+  }
+  .id{
+    width: 80vw;
+  }
+  .last__number{
+    flex-direction: row;
+    margin: 0 0 2vh 0;
+    width: 80vw;
+  }
+  .buttons{
+    width: 80vw;
+    flex-direction:  row;
+    height: auto;
+    margin-top: 3vh;
+  }
+  .cards{
+    flex-direction: row;
+    margin-bottom: 2vh;
+  }
 }
 </style>

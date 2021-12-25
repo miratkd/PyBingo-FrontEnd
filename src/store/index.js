@@ -36,8 +36,28 @@ export default createStore({
       return axios.get(path).then(response => {
         return response.data
       })
-    }
+    },
+    getNotifications (context, id) {
+      const path = context.state.url + 'bingo_notification/' + id + '/get_notification/'
+      return axios.get(path).then(response => {
+        return response.data
+      })
+    },
     //
+    // create account
+    createAccount (context, params) {
+      let path
+      const payload = {
+        name: params.name,
+        password: params.password
+      }
+      if (params.type === 'card') {
+        path = context.state.url + 'card/'
+        payload.admin = params.admin
+      } else path = context.state.url + 'bingo_admin/'
+
+      return axios.post(path, payload).then(response => { return response.data })
+    }
   },
   modules: {
   }

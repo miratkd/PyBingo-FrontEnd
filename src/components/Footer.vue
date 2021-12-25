@@ -4,7 +4,7 @@
       Py-Bingo
     </div>
     <div class="footer__info">
-      <div>Made by: Lucas Mira</div>
+      <div style="color: white">Made by: Lucas Mira</div>
       <a href="https://www.linkedin.com/in/lucas-mira-17514b203/" target="_blank">Linkedin</a>
       <a href="https://github.com/miratkd" target="_blank">Github</a>
     </div>
@@ -30,6 +30,7 @@ a{
   display: grid;
   grid-template-columns: 1fr 1fr;
   color: white;
+  gap: 5px
 }
 .footer__logo{
   font-size: xxx-large;
@@ -39,5 +40,14 @@ a{
   justify-content: space-between;
   height: 10vh;
   background: gray;
+}
+@media screen and (max-width: 500px) {
+  .footer__logo{
+    font-size: xx-large;
+  }
+  .footer__info{
+    width: 50vw;
+    margin-right: 0;
+  }
 }
 </style>

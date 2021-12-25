@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Admin from '../views/Admin.vue'
 import Card from '../views/Card'
+import CreateAccount from '../views/CreateAccount'
 
 const routes = [
   {
@@ -13,6 +14,11 @@ const routes = [
     path: '/admin/:id',
     name: 'Admin',
     component: Admin
+  },
+  {
+    path: '/create-account/:type',
+    name: 'CreateAccount',
+    component: CreateAccount
   },
   {
     path: '/card',

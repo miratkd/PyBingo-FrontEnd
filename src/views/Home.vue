@@ -7,7 +7,7 @@
       <router-link to="/card" class="button" style="background: lightblue">
         Entre em uma partida.
       </router-link>
-      <router-link to="/admin" class="button" style="background: lightgreen">
+      <router-link to="/create-account/admin" class="button" style="background: lightgreen">
         Crie uma partida de bingo.
       </router-link>
     </div>
