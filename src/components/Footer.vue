@@ -1,8 +1,8 @@
 <template>
   <div class="footer__containear row">
-    <div class="footer__logo">
+    <router-link to="/" class="footer__logo">
       Py-Bingo
-    </div>
+    </router-link>
     <div class="footer__info">
       <div style="color: white">Made by: Lucas Mira</div>
       <a href="https://www.linkedin.com/in/lucas-mira-17514b203/" target="_blank">Linkedin</a>

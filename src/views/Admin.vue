@@ -51,7 +51,8 @@ export default {
       numbers: [],
       lastNumber: '--',
       cards: [],
-      isLoading: false
+      isLoading: false,
+      isActive: true
     }
   },
   methods: {
@@ -73,6 +74,7 @@ export default {
     },
     async updateCards () {
       setTimeout(async () => {
+        if (!this.isActive) return false
         this.cards = await this.$store.dispatch('getCards', this.$route.params.id)
         this.updateCards()
       }, 5000)
@@ -82,6 +84,7 @@ export default {
     },
     async getNotifications () {
       setTimeout(async () => {
+        if (!this.isActive) return false
         const notification = await this.$store.dispatch('getNotifications', this.$route.params.id)
         if (notification) {
           notification.forEach(element => {
@@ -90,15 +93,30 @@ export default {
         }
         this.getNotifications()
       }, 5000)
+    },
+    async checkAdmin () {
+      const admin = JSON.parse(window.localStorage.getItem('admin'))
+      if (!admin) return false
+      if (String(admin.id) !== String(this.$route.params.id)) {
+        return false
+      }
+      return true
     }
   },
   async mounted () {
     this.isLoading = true
+    if (!await this.checkAdmin()) {
+      this.$router.push('/')
+      return false
+    }
     this.admin = await this.$store.dispatch('getAdmin', this.$route.params.id)
     this.numbers = await this.$store.dispatch('getAdminNumbers', this.$route.params.id)
     await this.updateCards()
     await this.getNotifications()
     this.isLoading = false
+  },
+  beforeUnmount () {
+    this.isActive = false
   }
 }
 </script>

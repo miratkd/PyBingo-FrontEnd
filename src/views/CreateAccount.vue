@@ -30,14 +30,14 @@ export default {
   },
   methods: {
     async createAccount () {
-      console.log('loguim')
       const params = {
         name: this.name,
         password: this.password
       }
       if (this.$route.params.type === 'card') params.admin = this.admin
       const response = await this.$store.dispatch('createAccount', params)
-      this.$router.go('/admin/' + )
+      window.localStorage.setItem('admin', JSON.stringify(response))
+      this.$router.push('/admin/' + response.id)
     }
   }
 }
