@@ -30,7 +30,7 @@
       <div class="cards row">
         <div v-if="cards.length < 1">Carregando...</div>
         <div v-else v-for="card in cards" :key="card.id" class="card" :class="isBingo(card)">
-          {{card.user_name}}
+          {{card.name}}
         </div>
       </div>
     </div>

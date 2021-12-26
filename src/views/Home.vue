@@ -4,7 +4,7 @@
       Bem vindo ao Py-Bingo!
     </div>
     <div class="buttons">
-      <router-link to="/card" class="button" style="background: lightblue">
+      <router-link to="/create-account/card" class="button" style="background: lightblue">
         Entre em uma partida.
       </router-link>
       <router-link to="/create-account/admin" class="button" style="background: lightgreen">

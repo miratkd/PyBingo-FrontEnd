@@ -29,15 +29,28 @@ export default {
     }
   },
   methods: {
-    async createAccount () {
+    createAccount () {
+      if (this.$route.params.type === 'card') this.createCard()
+      else this.createAdmin()
+    },
+    async createAdmin () {
       const params = {
         name: this.name,
-        password: this.password
+        password: this.password,
+        type: 'admin'
       }
-      if (this.$route.params.type === 'card') params.admin = this.admin
       const response = await this.$store.dispatch('createAccount', params)
-      window.localStorage.setItem('admin', JSON.stringify(response))
       this.$router.push('/admin/' + response.id)
+    },
+    async createCard () {
+      const params = {
+        name: this.name,
+        password: this.password,
+        type: 'card',
+        admin: this.admin
+      }
+      const response = await this.$store.dispatch('createAccount', params)
+      this.$router.push('/card/' + response.id)
     }
   }
 }

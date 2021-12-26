@@ -56,7 +56,11 @@ export default createStore({
         payload.admin = params.admin
       } else path = context.state.url + 'bingo_admin/'
 
-      return axios.post(path, payload).then(response => { return response.data })
+      return axios.post(path, payload).then(response => {
+        if (params.type === 'card') window.localStorage.setItem('card', JSON.stringify(response))
+        else window.localStorage.setItem('admin', JSON.stringify(response.data))
+        return response.data
+      })
     }
   },
   modules: {

@@ -1,21 +1,16 @@
 <template>
   <div>
-    <div v-if="!card"><CreateAccount :type="'card'"/></div>
-    <div v-else>logado</div>
+    test
   </div>
 </template>
 
 <script>
-import CreateAccount from '../components/CreateAccount.vue'
 export default {
   name: 'Card',
   data () {
     return {
       card: undefined
     }
-  },
-  components: {
-    CreateAccount
   }
 }
 </script>
