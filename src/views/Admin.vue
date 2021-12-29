@@ -60,14 +60,14 @@ export default {
       this.isLoading = true
       const respost = confirm('Tem certeza que deseja apagar todos os numeros?', 'Sim')
       if (!respost) return
-      this.$store.dispatch('cleanNumbers', this.$route.params.id).then(() => {
+      this.$store.dispatch('cleanNumbers', this.admin.id).then(() => {
         this.numbers = []
         this.lastNumber = '--'
         this.isLoading = false
       })
     },
     addNumber () {
-      this.$store.dispatch('addNumber', this.$route.params.id).then(response => {
+      this.$store.dispatch('addNumber', this.admin.id).then(response => {
         this.numbers.push(response)
         this.lastNumber = response.number
       })
@@ -75,7 +75,7 @@ export default {
     async updateCards () {
       setTimeout(async () => {
         if (!this.isActive) return false
-        this.cards = await this.$store.dispatch('getCards', this.$route.params.id)
+        this.cards = await this.$store.dispatch('getCards', this.admin.id)
         this.updateCards()
       }, 5000)
     },
@@ -85,7 +85,7 @@ export default {
     async getNotifications () {
       setTimeout(async () => {
         if (!this.isActive) return false
-        const notification = await this.$store.dispatch('getNotifications', this.$route.params.id)
+        const notification = await this.$store.dispatch('getNotifications', this.admin.id)
         if (notification) {
           notification.forEach(element => {
             toast.success(element.card.user_name + ' gritou bingo!')
@@ -95,11 +95,8 @@ export default {
       }, 5000)
     },
     async checkAdmin () {
-      const admin = JSON.parse(window.localStorage.getItem('admin'))
-      if (!admin) return false
-      if (String(admin.id) !== String(this.$route.params.id)) {
-        return false
-      }
+      this.admin = JSON.parse(window.localStorage.getItem('admin'))
+      if (!this.admin) return false
       return true
     }
   },
@@ -109,8 +106,7 @@ export default {
       this.$router.push('/')
       return false
     }
-    this.admin = await this.$store.dispatch('getAdmin', this.$route.params.id)
-    this.numbers = await this.$store.dispatch('getAdminNumbers', this.$route.params.id)
+    this.numbers = await this.$store.dispatch('getAdminNumbers', this.admin.id)
     await this.updateCards()
     await this.getNotifications()
     this.isLoading = false

@@ -39,8 +39,8 @@ export default {
         password: this.password,
         type: 'admin'
       }
-      const response = await this.$store.dispatch('createAccount', params)
-      this.$router.push('/admin/' + response.id)
+      await this.$store.dispatch('createAccount', params)
+      this.$router.push('/admin')
     },
     async createCard () {
       const params = {
@@ -49,8 +49,8 @@ export default {
         type: 'card',
         admin: this.admin
       }
-      const response = await this.$store.dispatch('createAccount', params)
-      this.$router.push('/card/' + response.id)
+      await this.$store.dispatch('createAccount', params)
+      this.$router.push('/card')
     }
   }
 }
